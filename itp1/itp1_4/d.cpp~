@@ -1,0 +1,17 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+	long int n,t;
+	cin >> n;
+	long int nmax=-10000000,nmin=10000000,nsum=0;
+	for(long int i=0;i<n;i++){
+		cin >> t;
+		if(nmax<t)nmax=t;
+		if(nmin>t)nmin=t;
+		nsum+=t;
+	}
+	cout << nmin << " " << nmax << " " << nsum << endl;
+	return 0;
+}

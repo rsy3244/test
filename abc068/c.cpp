@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+	int n,m;
+	cin >> n >> m;
+	pair<int,int> mp;
+	mp.first=0;
+	mp.second=0;
+	vector<pair<int,int> > list(m,mp);
+	vector<int> delist(0);
+	for(int i=0;i<m;i++){
+		cin >> list[i].first;
+		cin >> list[i].second;
+		if(list[i].first==1){
+			delist.push_back(list[i].second);
+		}
+	}
+	bool flag=false;
+	sort(list.begin(),list.end());
+	sort(delist.begin(),delist.end());
+	if(*lower_bound(delist.begin(),delist.end(),n)==n){
+		flag=true;
+	}
+	vector<int>::iterator it1;
+	vector<pair<int,int> >::iterator it2;
+	mp.second=-2000000;
+	for(it1=delist.begin();it1!=delist.end();++it1){
+		mp.first=*it1;
+		pair<int,int> temp;
+		for(it2=lower_bound(list.begin(),list.end(),mp);temp=*it2,temp.first==mp.first;++it2){
+			if(temp.second==n){
+				flag=true;
+				break;
+			}
+		}
+		if(flag)break;
+
+	}
+	if(flag)cout << "POSSIBLE" << endl;
+	else cout << "IMPOSSIBLE" << endl;
+
+	return 0;
+}
