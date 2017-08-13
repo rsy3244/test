@@ -8,16 +8,26 @@ int dp(int n,vector<int> tetra){
 	int num;
 	num=distance(tetra.begin(),upper_bound(tetra.begin(),tetra.end(),n)-1);
 
-	vector<int> table(n+1,INF),temp(100,0);
-	for(int i=0;i<=num;i++){
-		temp[i]=tetra[i];
-	}
+	vector<int> table(n+1,INF),temp(1,0);
 
 	int c=0;
 	while(table[n]==INF){
-		for(int i=1;i<
+        vector<int> buf(0);
+		for(int i=0;i<temp.size();i++){
+            for(int j=1;j<tetra.size();j++){
+                int next=temp[i]+tetra[j];
+                if(table[next]!=INF){
+                    table[next]=c;
+                    buf.push_back(next);
+                }
+            }
+        }
+        temp=buf;
+        c++;
+    }
 
-	return pre[n];
+
+	return table[n];
 }
 
 int main(){
@@ -32,6 +42,10 @@ int main(){
 		}
 		c++;
 	}
+
+    vector<int> table((int)1e6+1,INF);
+
+
 	while(true){
 		int n;
 		cin >> n;
