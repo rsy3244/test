@@ -1,39 +1,13 @@
 #include <bits/stdc++.h>
-
-#define INF 1e7
+#define BORDER (int)1e6
+#define INF (int)1e7
 
 using namespace std;
-
-int dp(int n,vector<int> tetra){
-	int num;
-	num=distance(tetra.begin(),upper_bound(tetra.begin(),tetra.end(),n)-1);
-
-	vector<int> table(n+1,INF),temp(1,0);
-
-	int c=0;
-	while(table[n]==INF){
-        vector<int> buf(0);
-		for(int i=0;i<temp.size();i++){
-            for(int j=1;j<tetra.size();j++){
-                int next=temp[i]+tetra[j];
-                if(table[next]!=INF){
-                    table[next]=c;
-                    buf.push_back(next);
-                }
-            }
-        }
-        temp=buf;
-        c++;
-    }
-
-
-	return table[n];
-}
 
 int main(){
 	vector<int> t(1,0),t1(1,0);
 	int c=1;
-	while(t[c-1]<=(int)1e6){
+	while(t[c-1]<=BORDER){
 		int temp;
 		temp=c*(c+1)*(c+2)/6;
 		t.push_back(temp);
@@ -43,25 +17,34 @@ int main(){
 		c++;
 	}
 
-    vector<int> table((int)1e6+1,INF);
+    vector<int> table(BORDER,0),table1(BORDER,0);
+
+    for(int i = 1; i < BORDER; i++){
+        int ans = INF;
+        for(int j = 1; j < t.size(); j++){
+            if(t[j] > i)break;
+            if(i - t[j] >= 0){
+                ans = min( ans, table[i-t[j]]+1);
+            }
+        }
+        table[i] = ans;
+        ans = INF;
+        for(int j = 1; j < t1.size(); j++){
+            if(t1[j] > i) break;
+            if(i - t[j] >= 0){
+                ans = min( ans, table1[ i - t1[j]] + 1);
+            }
+        }
+        table1[i] = ans;
+    }
+
 
 
 	while(true){
 		int n;
 		cin >> n;
 		if(n==0)break;
-		
-		/*
-		for(int i=0;i<s.size();i++){
-			for(int j=0;j<s[i].size();j++){
-				if(s[i][j]==INF) cout << "0";
-				else cout << s[i][j];
-				cout << " ";
-			}
-			cout << endl;
-		}
-		*/
-		cout << dp(n,t) << " " << dp(n,t1) << endl;
+		cout << table[n] << " " << table1[n] << endl;
 	}
 	return 0;
 }

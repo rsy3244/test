@@ -5,7 +5,7 @@ using namespace std;
 int main(){
 	int n,w,h;
 	cin >> n >> w >> h;
-	vector<bool> line(h+1,false),column(w+1,false);
+	vector<bool> column(w+1,false),line(h+1,false);
 	for(int i=0;i<n;i++){
 		int x,y,r;
 		cin >> x >> y >> r;
@@ -19,14 +19,14 @@ int main(){
 		}
 	}
 	bool flag1=true,flag2=true;
-	for(int i=0;i<=h;i++){
-		if(!line[i]){
+	for(int i=0;i<=w;i++){
+		if(!column[i]){
 			flag1=false;
 			break;
 		}
 	}
-	for(int i=0;i<=w;i++){
-		if(!column[i]){
+	for(int i=0;i<=h;i++){
+		if(!line[i]){
 			flag2=false;
 			break;
 		}
